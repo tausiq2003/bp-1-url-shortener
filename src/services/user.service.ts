@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import db from "../db/index.ts";
-import { usersTable } from "../models/users.models.ts";
+import db from "../db/index";
+import { usersTable } from "../models/users.models";
 
 export async function getUserByEmail(email: string) {
     const [existingUser] = await db
@@ -32,6 +32,50 @@ export async function createUser(
     } catch (err) {
         return {
             error: (err as Error).message,
+        };
+    }
+}
+export async function updateUser(
+    id: string,
+    firstName: string,
+    lastName?: string,
+) {
+    try {
+        if (!lastName) {
+            const [res] = await db
+                .update(usersTable)
+                .set({ firstname: firstName })
+                .where(eq(usersTable.id, id))
+                .returning({ firstName: usersTable.firstname });
+            return res;
+        }
+        const [res] = await db
+            .update(usersTable)
+            .set({ firstname: firstName, lastname: lastName })
+            .where(eq(usersTable.id, id))
+            .returning({
+                firstName: usersTable.firstname,
+                lastName: usersTable.lastname,
+            });
+        return res;
+    } catch (error) {
+        return {
+            error: (error as Error).message,
+        };
+    }
+}
+export async function deleteUser(id: string) {
+    try {
+        const [res] = await db
+            .delete(usersTable)
+            .where(eq(usersTable.id, id))
+            .returning({
+                deletedId: usersTable.id,
+            });
+        return res;
+    } catch (error) {
+        return {
+            error: (error as Error).message,
         };
     }
 }

@@ -1,0 +1,8 @@
+{
+  "out": "./src/drizzle",
+  "schema": "./dist/models/index.js",
+  "dialect": "postgresql",
+  "dbCredentials": {
+    "url": "postgresql://admin:supermaneminem@db:5432/url_short"
+  }
+}

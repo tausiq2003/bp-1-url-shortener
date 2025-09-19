@@ -1,5 +1,5 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import { userTokenSchema } from "../validation/token.validation.ts";
+import { userTokenSchema } from "../validation/token.validation";
 import { ZodError } from "zod";
 
 const jwtSecret = process.env.JWT_SECRET;

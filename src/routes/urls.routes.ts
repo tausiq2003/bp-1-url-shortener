@@ -1,13 +1,17 @@
 import express from "express";
-import type { AuthenticatedRequest } from "../types/requestType.ts";
-import { shortenPostRequestBodySchema } from "../validation/request.validation.ts";
-import { ensureAuthenticated } from "../middlewares/auth.middleware.ts";
+import type { AuthenticatedRequest } from "../types/requestType";
+import {
+    shortenPostRequestBodySchema,
+    updateURLRequestBodySchema,
+} from "../validation/request.validation";
+import { ensureAuthenticated } from "../middlewares/auth.middleware";
 import {
     createUrl,
     deleteCodes,
     getCodesById,
     getOriginalUrl,
-} from "../services/url.service.ts";
+    updateCodesAndUrls,
+} from "../services/url.service";
 import { nanoid } from "nanoid";
 
 const urlsRouter = express.Router();
@@ -20,7 +24,12 @@ urlsRouter.post(
         const validationResult =
             await shortenPostRequestBodySchema.safeParseAsync(req.body);
         if (!validationResult.success) {
-            return res.status(400).json({ error: validationResult.error });
+            const prettyErrors = validationResult.error.issues.map((issue) => ({
+                field: issue.path.join("."),
+                message: issue.message,
+                code: issue.code,
+            }));
+            return res.status(400).json({ errors: prettyErrors });
         }
         const { url, code } = validationResult.data;
 
@@ -53,16 +62,44 @@ urlsRouter.get(
         return res.status(200).json({ codes });
     },
 );
-
-urlsRouter.delete(
-    "/:id",
+urlsRouter.patch(
+    "/update",
     ensureAuthenticated,
     async function (req: AuthenticatedRequest, res) {
-        const id = req.params.id;
+        const validationResult =
+            await updateURLRequestBodySchema.safeParseAsync(req.body);
+
+        if (!validationResult.success) {
+            const prettyErrors = validationResult.error.issues.map((issue) => ({
+                field: issue.path.join("."),
+                message: issue.message,
+                code: issue.code,
+            }));
+            return res.status(400).json({ errors: prettyErrors });
+        }
+        const { shortCode, targetUrl } = validationResult.data;
+        const userId = req.user?.id;
+        if (!userId) {
+            return res.status(401).json({ errors: "Bad Request" });
+        }
+        const result = await updateCodesAndUrls(userId, shortCode, targetUrl);
+        if (!result)
+            return res.status(500).json({ error: "something wrong happened" });
+        if ("error" in result)
+            return res.status(401).json({ error: result.error });
+        return res.status(200).json({ data: { result } });
+    },
+);
+
+urlsRouter.delete(
+    "/:code",
+    ensureAuthenticated,
+    async function (req: AuthenticatedRequest, res) {
+        const code = req.params.code;
         const userid = req.user?.id;
-        if (!id || !userid)
+        if (!code || !userid)
             return res.status(401).json({ error: "Unauthenticated request" });
-        const result = await deleteCodes(id, userid);
+        const result = await deleteCodes(code, userid);
         if (!result) {
             return res.status(404).json({ error: "Not found" });
         }

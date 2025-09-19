@@ -1,0 +1,302 @@
+{
+	"info": {
+		"_postman_id": "131ed191-79d2-4d19-a223-c37c475d0dbc",
+		"name": "url-shortner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26875026",
+		"_collection_link": "https://own000-8542.postman.co/workspace/ec2fcd29-6ebc-47d8-9813-be72a2f74651/collection/26875026-131ed191-79d2-4d19-a223-c37c475d0dbc?action=share&source=collection_link&creator=26875026"
+	},
+	"item": [
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/health",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"Baby\",\n    \"lastname\": \"Diddy\",\n    \"email\": \"diddy@biggie.com\",\n    \"password\": \"qwerasdfA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dev}}/user/signup",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"user",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"diddy@biggie.com\",\n    \"password\": \"qwerasdfA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dev}}/user/login",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2NzcyMGM4LTUwZjQtNDVmMS04ZjQxLWM3OWI2NDdjNjgxNyIsImlhdCI6MTc1ODI3MTM1Nn0.07ESW1WgmhXqU_uOPV6yfrOJ27tIxXrYG94m-f85CbI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Baby P\",\n    \"lastName\": \"Diddy\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dev}}/user/update",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2NzcyMGM4LTUwZjQtNDVmMS04ZjQxLWM3OWI2NDdjNjgxNyIsImlhdCI6MTc1ODI3MjQ3MX0.el_pvixe6tF-s5b3ph1l_GU6jm3fNgSPUvhEVCCFLqE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/user/delete",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "url-shorten",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkOThiNTMzLTcxZGEtNGIwNy1iNTI2LWNjN2I4ZjA2MjVhMCIsImlhdCI6MTc1ODI3MjA0NX0.GwKjUJ7IBgyqKTKaN4BCIk4plHx60aBy00KAqjeiFPg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://www.hellno.com\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dev}}/shorten",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"shorten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-url-codes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2NzcyMGM4LTUwZjQtNDVmMS04ZjQxLWM3OWI2NDdjNjgxNyIsImlhdCI6MTc1ODI3MjQ3MX0.el_pvixe6tF-s5b3ph1l_GU6jm3fNgSPUvhEVCCFLqE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/codes",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"codes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/:shortCode",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						":shortCode"
+					],
+					"variable": [
+						{
+							"key": "shortCode",
+							"value": "nigga"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-url-request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdmYzBjMGY4LWNlMjYtNGVkMy1hZGJkLTYxYzIxNDhiNDNiYyIsImlhdCI6MTc1ODI2ODgwOH0.ZbjXEvBeGIWeshrhhNmm5bInx0xGfnTPGne5_6AlinQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shortCode\": \"Ek9GZj\",\n    \"targetUrl\": \"https://www.asdf.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dev}}/update",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM2NzcyMGM4LTUwZjQtNDVmMS04ZjQxLWM3OWI2NDdjNjgxNyIsImlhdCI6MTc1ODI3MjQ3MX0.el_pvixe6tF-s5b3ph1l_GU6jm3fNgSPUvhEVCCFLqE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{dev}}/:code",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						":code"
+					],
+					"variable": [
+						{
+							"key": "code",
+							"value": "Asfg"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

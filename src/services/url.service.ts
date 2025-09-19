@@ -1,5 +1,5 @@
-import { urlsTable } from "../models/urls.models.ts";
-import db from "../db/index.ts";
+import { urlsTable } from "../models/urls.models";
+import db from "../db/index";
 import { and, eq } from "drizzle-orm";
 
 export async function createUrl(
@@ -36,10 +36,41 @@ export async function getCodesById(id: string) {
         .where(eq(urlsTable.userId, id));
     return codes;
 }
-export async function deleteCodes(id: string, userid: string) {
+export async function updateCodesAndUrls(
+    id: string,
+    shortCode: string,
+    targetUrl: string,
+) {
+    try {
+        const [res] = await db
+            .update(urlsTable)
+            .set({ targetUrl: targetUrl })
+            .where(
+                and(
+                    eq(urlsTable.userId, id),
+                    eq(urlsTable.shortCode, shortCode),
+                ),
+            )
+            .returning({
+                shortCode: urlsTable.shortCode,
+                targetUrl: urlsTable.targetUrl,
+            });
+        return res;
+    } catch (err) {
+        return {
+            error: (err as Error).message,
+        };
+    }
+}
+export async function deleteCodes(shortCode: string, userid: string) {
     const [result] = await db
         .delete(urlsTable)
-        .where(and(eq(urlsTable.id, id), eq(urlsTable.userId, userid)))
+        .where(
+            and(
+                eq(urlsTable.shortCode, shortCode),
+                eq(urlsTable.userId, userid),
+            ),
+        )
         .returning({
             shortCode: urlsTable.shortCode,
             targetUrl: urlsTable.targetUrl,

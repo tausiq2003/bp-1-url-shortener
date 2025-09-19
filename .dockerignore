@@ -1,2 +1,12 @@
 node_modules/
 dist/
+url-env.postman_environment.json
+url-shortner.postman_collection.json
+.gitignore
+.prettierrc
+LICENSE
+README.md
+docker-compose.yml
+drizzle.config.ts
+eslint.config.js
+nodemon.json
