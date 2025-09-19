@@ -23,6 +23,11 @@ Clone the repository:
 ```bash
 git clone https://github.com/tausiq2003/bp-1-url-shortener
 ```
+Move to the folder and create `.env` according to `.env.example`:
+```bash
+cd bp-1-url-shortener
+touch .env
+```
 Install dependencies:
 
 ```bash
